@@ -642,12 +642,13 @@ class TVSeason(object):
 class TVEpisode(object):
     """Container for TV Episodes"""
 
-    def __init__(self, show, season, number=-1, **kwargs):
+    def __init__(self, show, season, number=-1, slug=None, **kwargs):
         super(TVEpisode, self).__init__()
         self.media_type = 'episodes'
         self.show = show
         self.season = season
         self.number = number
+        self._slug = slug
         self.overview = self.title = self.year = self.number_abs = None
         self.first_aired = self.last_updated = None
         self.trakt = self.tmdb = self.tvdb = self.imdb = None
@@ -658,6 +659,13 @@ class TVEpisode(object):
         else:
             self._get()
         self.episode = self.number  # Backwards compatability
+
+    @property
+    def slug(self):
+        if self._slug is not None:
+            return self._slug
+
+        return slugify(self.show)
 
     @get
     def _get(self):
@@ -695,7 +703,7 @@ class TVEpisode(object):
     @property
     def ext(self):
         return 'shows/{id}/seasons/{season}/episodes/{episode}'.format(
-            id=slugify(self.show), season=self.season, episode=self.number
+            id=self.slug, season=self.season, episode=self.number
         )
 
     @property
