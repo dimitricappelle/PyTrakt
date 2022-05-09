@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 import json
 import os
-import sys
 from copy import deepcopy
 
 import trakt
 
-
-MOCK_DATA_DIR = os.path.abspath('tests/mock_data')
-
+TESTS_DIR = os.path.dirname(__file__)
+MOCK_DATA_DIR = os.path.join(TESTS_DIR, "mock_data")
 
 MOCK_DATA_FILES = [
     os.path.join(MOCK_DATA_DIR, 'calendars.json'),
