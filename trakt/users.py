@@ -181,7 +181,7 @@ class UserList(namedtuple('UserList', ['name', 'description', 'privacy',
         yield uri.format(user=slugify(self.creator), id=self.trakt), None
 
     @post
-    def remove_items(self, *items):
+    def remove_items(self, items):
         """Remove *items* to this :class:`UserList`, where items is an iterable
         """
         movies = [m.ids for m in items if isinstance(m, Movie)]
